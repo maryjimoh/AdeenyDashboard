@@ -111,28 +111,28 @@ const mosqueSlice = createSlice({
   name: 'mosques',
   initialState,
   reducers: {
-    addMosque: (state, action: PayloadAction<Mosque>) => {
-      const newMosque: Mosque = {
-        id: new Date().toISOString() + Math.random().toString(),
-        mosqueName: action.payload.mosqueName,
-        email: action.payload.email,
-        phone: action.payload.phone,
-        imamName: action.payload.imamName,
-        locationDisplayName: action.payload.locationDisplayName,
-        long: action.payload.long,
-        lat: action.payload.lat,
-        password: action.payload.password,
-        role: action.payload.role,
-        content: action.payload.content,
-        image: action.payload.image,
-        certificate: action.payload.certificate,
-        donations: [],
-        location: '',
-        // name: undefined,
-        // imam: undefined
-      };
-      state.mosques.push(newMosque);
-    },
+    // addMosque: (state, action: PayloadAction<Mosque>) => {
+    //   const newMosque: Mosque = {
+    //     id: new Date().toISOString() + Math.random().toString(),
+    //     mosqueName: action.payload.mosqueName,
+    //     email: action.payload.email,
+    //     phone: action.payload.phone,
+    //     imamName: action.payload.imamName,
+    //     locationDisplayName: action.payload.locationDisplayName,
+    //     long: action.payload.long,
+    //     lat: action.payload.lat,
+    //     password: action.payload.password,
+    //     role: action.payload.role,
+    //     content: action.payload.content,
+    //     image: action.payload.image,
+    //     certificate: action.payload.certificate,
+    //     donations: [],
+    //     location: '',
+    //      name: undefined,
+    //     // imam: undefined
+    //   };
+    //   state.mosques.push(newMosque);
+    // },
     updateMosque: (state, action: PayloadAction<{ id: string; updatedMosque: Partial<Mosque> }>) => {
       const { id, updatedMosque } = action.payload;
       const index = state.mosques.findIndex((mosque) => mosque.id === id);
@@ -172,6 +172,6 @@ const mosqueSlice = createSlice({
   },
 });
 
-export const { addMosque, updateMosque, addMosqueSuccess, addMosqueFailure, addDonationToMosque, toggleFavourite } =
+export const {  updateMosque, addMosqueSuccess, addMosqueFailure, addDonationToMosque, toggleFavourite } =
   mosqueSlice.actions;
 export default mosqueSlice.reducer;

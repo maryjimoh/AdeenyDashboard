@@ -16,7 +16,7 @@ const SignUp: React.FC = () => {
     passwordAgain: "",
     phoneNumber:"",
     role: "ADMIN",
-    profilePic: null, 
+    profilePic: null as File | null, 
   });
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -57,20 +57,21 @@ const SignUp: React.FC = () => {
 
     setLoading(true);
     try {
-      const user = {
+      // const user = 
+
+      await dispatch(await (createUser({
         first_name: userData.firstname,
         last_name: userData.lastname,
         other_name: userData.firstname + " " + userData.lastname,
         email: userData.email,
         phone_number: userData.phoneNumber,
         password: userData.password,
-        profile_pic: userData.profilePic, 
+        profile_pic: userData.profilePic,
         confirm_password: userData.passwordAgain,
-        role: userData.role
-      }
-
-      await dispatch(await (createUser(user) as unknown as Promise<any>)).unwrap();
-      navigate("/auth/verifyotp", { state: { email: user.email } });
+        role: userData.role,
+        // image: undefined
+      }) as unknown as Promise<any>)).unwrap();
+      navigate("/auth/verifyotp", { state: { email: userData.email } });
       // dispatch(addUser(user));
     } catch (error) {
       console.log(error, "hjhe");
@@ -86,7 +87,9 @@ const SignUp: React.FC = () => {
     <>
     
      {/* <Header/> */}
-     <AuthHeader/>
+     <AuthHeader sidebarOpen={undefined} setSidebarOpen={function (arg0: boolean): void {
+        throw new Error('Function not implemented.');
+      } }/>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark  dark:bg-black ">
         <div className="flex flex-wrap items-center h-[1000px]">
          
@@ -246,3 +249,4 @@ const SignUp: React.FC = () => {
 };
 
 export default SignUp;
+

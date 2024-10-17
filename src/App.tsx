@@ -209,3 +209,37 @@ function App() {
 }
 
 export default App;
+
+
+// profilePic: null as File | null, 
+// const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//   const file = e.target.files?.[0];
+//   if (file) {
+//     setUserData(prevData => ({ ...prevData, profilePic: file }));
+//     const reader = new FileReader();
+//     reader.onloadend = () => {
+//       setPreview(reader.result as string);
+//     };
+//     reader.readAsDataURL(file);
+//   }
+// };
+
+{/* Profile Picture input */}
+{/* <div className="mb-4">
+<label className="mb-2.5 block font-medium text-black dark:text-white">
+  Profile Picture
+</label>
+<div className='flex'>
+<input
+  type="file"
+  accept="image/*"
+  onChange={handleFileChange}
+  className="w-full"
+/>
+{preview && (
+  <div className="">
+    <img src={preview} alt="Profile Preview" className="w-10 h-10 rounded-full object-cover" />
+  </div>
+)}
+</div>
+</div> */}

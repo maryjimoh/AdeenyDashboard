@@ -65,7 +65,9 @@ const VerifyOtp: React.FC = () => {
 
   return (
     <>
-      <AuthHeader/>
+      <AuthHeader sidebarOpen={undefined} setSidebarOpen={function (arg0: boolean): void {
+        throw new Error('Function not implemented.');
+      } }/>
       <div className="rounded-sm border border-stroke  dark:border-strokedark  bg-white shadow-default">
         <div className="flex flex-wrap items-center h-[100%]   ">
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 dark:bg-boxdark w-[60] h-[100vh] " >

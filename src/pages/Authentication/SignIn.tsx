@@ -12,7 +12,7 @@ const SignIn: React.FC = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null); // To manage errors
+  const [error, setError] = useState<string | null>(null); 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

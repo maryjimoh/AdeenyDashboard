@@ -3,15 +3,16 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError } from 'axios';
 
 interface User {
+  [x: string]: any;
   first_name: string;
   last_name: string;
-  other_name: string;
+  other_name?: string;
   email: string;
   password: string;
-  confirmed_password: string;
+  confirm_password: string;
   role: string;
   phone_number:string,
-  profilePic: null
+  profile_pic: File | null; 
 }
 
 interface AuthState {

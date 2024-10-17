@@ -3,13 +3,16 @@ import CardDataStats from '../../components/CardDataStats';
 import TableOne from '../../components/Tables/TableOne';
 import { getAllMosqueData } from '../../redux/slice/mosqueSlice';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../redux/store/Store';
+import { AppDispatch, RootState } from '../../redux/store/Store';
+import { useSelector } from 'react-redux';
 
 interface ECommerceProps {
   token: string;
 }
 
 const ECommerce: React.FC<ECommerceProps> = ({ token }) => {
+
+  const mosques = useSelector((state: RootState) => state.mosque.mosques);
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
@@ -28,7 +31,7 @@ const ECommerce: React.FC<ECommerceProps> = ({ token }) => {
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Total Transactions" total="$3.456K" rate="0.43%" levelUp>
+        <CardDataStats title="Total Transactions" total="GH80" rate=""  levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="22"
@@ -47,13 +50,13 @@ const ECommerce: React.FC<ECommerceProps> = ({ token }) => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Failed transactions" total="1" rate="4.35%" levelUp>
+        <CardDataStats title="Failed transactions" total="1" rate="" levelUp>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" className="fill-primary dark:fill-white">
             <path fill="none" d="M0 0h24v24H0z" />
             <path fill="" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm3.707 13.707l-1.414 1.414L12 13.414l-2.293 2.293-1.414-1.414L10.586 12 8.293 9.707l1.414-1.414L12 10.586l2.293-2.293 1.414 1.414L13.414 12l2.293 2.293z" />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Mosques" total="93" rate="2.59%" levelUp>
+        <CardDataStats title={"Total Mosques"}  rate=""  total={mosques.length.toString()}  levelUp>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -68,7 +71,8 @@ const ECommerce: React.FC<ECommerceProps> = ({ token }) => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Waqf" total="$30.456" rate="0.95%" levelDown>
+        <CardDataStats title="Total Waqf" total="GH
+        30.456" rate=""  levelDown>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

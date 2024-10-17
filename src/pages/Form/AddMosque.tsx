@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addMosque , createMosque} from '../../redux/slice/mosqueSlice';
+import { createMosque} from '../../redux/slice/mosqueSlice';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
-import SelectGroupOne from '../../components/Forms/SelectGroup/SelectGroupOne';
 import axios from 'axios';
 import { AppDispatch, RootState } from '../../redux/store/Store';
+import Loader from '../../common/Loader';
 
 const AddMosque = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -17,13 +17,16 @@ const AddMosque = () => {
     imamName: "",
     content: "",
     donation: [],
+    profilePic: null as File | null,
   });
 
+  const [error, setError] = useState<string | null>(null); 
+  const [loading, setLoading] = useState(false);
   console.log(token,"heyyss")
-
+  const [preview, setPreview] = useState<string | null>(null);
   const [location, setLocation] = useState({
-    lat: 37.78825,
-    long: -122.4324,
+    lat: "37.7882",
+    long: "-122.4324",
     locationDisplayName: ""
   });
 
@@ -34,20 +37,44 @@ const AddMosque = () => {
   };
 
   const handleOnSubmit = (e: { preventDefault: () => void; }) => {
+ try {
 
-    e.preventDefault()
-    const formData = new FormData();
-    formData.append('name', addMosqueData.mosqueName);
-    formData.append('mail', addMosqueData.email);
-    formData.append('tel', addMosqueData.phone);
-    formData.append('imam', addMosqueData.imamName);
-    formData.append('description', addMosqueData.content);
-    formData.append('location', location.locationDisplayName);
-    formData.append('lat', location.lat)
-    formData.append('long', location.long);
-    // dispatch(addMosque({ mosqueData: formData}))
-    dispatch(createMosque({ mosqueData: formData,  token: token })).unwrap()
+  setLoading(true);
+  setError(null);
+  e.preventDefault()
+  const formData = new FormData();
+  formData.append('name', addMosqueData.mosqueName);
+  formData.append('mail', addMosqueData.email);
+  formData.append('tel', addMosqueData.phone);
+  formData.append('imam', addMosqueData.imamName);
+  formData.append('description', addMosqueData.content);
+  formData.append('location', location.locationDisplayName);
+  formData.append('lat', location.lat)
+  formData.append('long', location.long);
+  if(addMosqueData.profilePic) {
+    formData.append('image', addMosqueData.profilePic)
+  }
+  // dispatch(addMosque({ mosqueData: formData}))
+  dispatch(createMosque({ mosqueData: formData,  token: token })).unwrap()
+  
+ } catch (err) {
+  setError("adding mosque failed");
+} finally {
+  setLoading(false);
+}
   };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0];
+  if (file) {
+    setAddMosqueData(prevData => ({ ...prevData, profilePic: file }));
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  }
+};
 
   const handleLocationBlur = async (input: string) => {
     try {
@@ -85,6 +112,8 @@ const AddMosque = () => {
 
   return (
     <>
+
+{loading && <Loader />}
       <Breadcrumb pageName="Add New Mosque" />
       <div className="flex justify-center items-center w-[100%] ">
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark w-[100%]">
@@ -148,6 +177,27 @@ const AddMosque = () => {
                 />
               </div>
 
+            <div className="mb-4">
+              <label className="mb-2.5 block font-medium text-black dark:text-white">
+               Profile Picture
+              </label>
+              <div className='flex'>
+              <input
+               type="file"
+               accept="image/*"
+               onChange={handleFileChange}
+               className="w-full"
+             />
+            {preview && (
+               <div className="">
+                <img src={preview} alt="Profile Preview" className="w-10 h-10 rounded-full object-cover" />
+               </div>
+            )}
+         </div>
+        </div>
+
+                 
+
               <div className="mb-4.5">
                 <label className="mb-2.5 block text-black dark:text-white">
                   Location
@@ -188,3 +238,36 @@ const AddMosque = () => {
 
 export default AddMosque;
 
+
+// profilePic: null as File | null, 
+// const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//   const file = e.target.files?.[0];
+//   if (file) {
+//     setUserData(prevData => ({ ...prevData, profilePic: file }));
+//     const reader = new FileReader();
+//     reader.onloadend = () => {
+//       setPreview(reader.result as string);
+//     };
+//     reader.readAsDataURL(file);
+//   }
+// };
+
+{/* Profile Picture input */}
+{/* <div className="mb-4">
+<label className="mb-2.5 block font-medium text-black dark:text-white">
+  Profile Picture
+</label>
+<div className='flex'>
+<input
+  type="file"
+  accept="image/*"
+  onChange={handleFileChange}
+  className="w-full"
+/>
+{preview && (
+  <div className="">
+    <img src={preview} alt="Profile Preview" className="w-10 h-10 rounded-full object-cover" />
+  </div>
+)}
+</div>
+</div> */}
