@@ -1,10 +1,12 @@
 import { configureStore, applyMiddleware} from "@reduxjs/toolkit";
 import authReducer from "../slice/authSlice"
 import mosqueSlice from "../slice/mosqueSlice";
+import waqfSlice from "../slice/waqfSlice"
 
 const rootReducer = {
   auth: authReducer,
-  mosque:mosqueSlice
+  mosque:mosqueSlice,
+  waqf:waqfSlice,
 };
 
 export const store = configureStore({

@@ -4,7 +4,7 @@ import { createMosque} from '../../redux/slice/mosqueSlice';
 import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import axios from 'axios';
 import { AppDispatch, RootState } from '../../redux/store/Store';
-import Loader from '../../common/Loader';
+import Modal from '../../common/Loader/Modal';
 
 const AddMosque = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -22,6 +22,9 @@ const AddMosque = () => {
 
   const [error, setError] = useState<string | null>(null); 
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState('');
+
   console.log(token,"heyyss")
   const [preview, setPreview] = useState<string | null>(null);
   const [location, setLocation] = useState({
@@ -36,34 +39,39 @@ const AddMosque = () => {
     setAddMosqueData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleOnSubmit = (e: { preventDefault: () => void; }) => {
- try {
 
-  setLoading(true);
-  setError(null);
-  e.preventDefault()
-  const formData = new FormData();
-  formData.append('name', addMosqueData.mosqueName);
-  formData.append('mail', addMosqueData.email);
-  formData.append('tel', addMosqueData.phone);
-  formData.append('imam', addMosqueData.imamName);
-  formData.append('description', addMosqueData.content);
-  formData.append('location', location.locationDisplayName);
-  formData.append('lat', location.lat)
-  formData.append('long', location.long);
-  if(addMosqueData.profilePic) {
-    formData.append('image', addMosqueData.profilePic)
+  const handleOnSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append('name', addMosqueData.mosqueName);
+      formData.append('mail', addMosqueData.email);
+      formData.append('tel', addMosqueData.phone);
+      formData.append('imam', addMosqueData.imamName);
+      formData.append('description', addMosqueData.content);
+      formData.append('location', location.locationDisplayName);
+      formData.append('lat', location.lat);
+      formData.append('long', location.long);
+
+      if (addMosqueData.profilePic) {
+        formData.append('image', addMosqueData.profilePic);
+      }
+
+      await dispatch(createMosque({ mosqueData: formData, token })).unwrap();
+      setLoading(true);
+      setModalContent('Mosque added successfully!');
+      setShowModal(true);
+    } catch (error: any) {
+      setModalContent(error?.message || 'An error occurred while adding the Waqf.');
+    } finally {
+      setLoading(false);
+      setShowModal(true);
+    
+    }
   }
-  // dispatch(addMosque({ mosqueData: formData}))
-  dispatch(createMosque({ mosqueData: formData,  token: token })).unwrap()
-  
- } catch (err) {
-  setError("adding mosque failed");
-} finally {
-  setLoading(false);
-}
-  };
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   const file = e.target.files?.[0];
   if (file) {
@@ -100,6 +108,7 @@ const AddMosque = () => {
         alert("Could not retrieve location details. Please try again.");
       }
     } catch (error) {
+      setModalContent("Error fetching location details.")
       alert("Error fetching location details.");
     }
   };
@@ -113,7 +122,6 @@ const AddMosque = () => {
   return (
     <>
 
-{loading && <Loader />}
       <Breadcrumb pageName="Add New Mosque" />
       <div className="flex justify-center items-center w-[100%] ">
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark w-[100%]">
@@ -225,13 +233,22 @@ const AddMosque = () => {
                 />
               </div>
 
-              <button type="submit" className="w-full flex justify-center rounded bg-primary p-3 font-medium text-white hover:bg-opacity-90">
-                Add Mosque
-              </button>
+              <button
+                  type="submit"
+                  className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray hover:bg-opacity-90"
+                >
+                      {loading ? <div className="h-7 w-7 animate-spin rounded-full border-4 border-solid border-stroke border-t-transparent"></div>: 'AddMosque'}
+                </button>
             </div>
           </form>
         </div>
       </div>
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title="Add Waqf"
+        content={modalContent}
+      />
     </>
   );
 };
@@ -239,35 +256,3 @@ const AddMosque = () => {
 export default AddMosque;
 
 
-// profilePic: null as File | null, 
-// const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//   const file = e.target.files?.[0];
-//   if (file) {
-//     setUserData(prevData => ({ ...prevData, profilePic: file }));
-//     const reader = new FileReader();
-//     reader.onloadend = () => {
-//       setPreview(reader.result as string);
-//     };
-//     reader.readAsDataURL(file);
-//   }
-// };
-
-{/* Profile Picture input */}
-{/* <div className="mb-4">
-<label className="mb-2.5 block font-medium text-black dark:text-white">
-  Profile Picture
-</label>
-<div className='flex'>
-<input
-  type="file"
-  accept="image/*"
-  onChange={handleFileChange}
-  className="w-full"
-/>
-{preview && (
-  <div className="">
-    <img src={preview} alt="Profile Preview" className="w-10 h-10 rounded-full object-cover" />
-  </div>
-)}
-</div>
-</div> */}

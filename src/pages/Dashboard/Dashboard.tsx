@@ -6,11 +6,11 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store/Store';
 import { useSelector } from 'react-redux';
 
-interface ECommerceProps {
+interface DashboardProps {
   token: string;
 }
 
-const ECommerce: React.FC<ECommerceProps> = ({ token }) => {
+const Dashboard: React.FC<DashboardProps> = ({ token }) => {
 
   const mosques = useSelector((state: RootState) => state.mosque.mosques);
   const dispatch = useDispatch<AppDispatch>();
@@ -95,4 +95,4 @@ const ECommerce: React.FC<ECommerceProps> = ({ token }) => {
   );
 };
 
-export default ECommerce;
+export default Dashboard;

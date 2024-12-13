@@ -1,6 +1,5 @@
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import CoverOne from '../images/cover/cover-01.png';
-import { Link } from 'react-router-dom';
 import Loader from '../common/Loader';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../redux/store/Store';
@@ -21,6 +20,7 @@ const Profile = () => {
 
   useEffect(()=>{
     console.log(token,"acc")
+    console.log(loginUser)
   }, [token])
 
   
@@ -87,8 +87,8 @@ const Profile = () => {
         </div>
         <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
-            <div className="relative drop-shadow-2">
-            <img src={`${baseURL}${loginUser.image}`} alt="profile" />
+            <div className="relative drop-shadow-2 h-[100%] w-full rounded-full bg-neutral-700  flex items-center justify-center">
+            <img src={`${baseURL}${loginUser.profile_pic}`} alt="profile"  className=" h-[100%] w-full max-w-30 rounded-full"/>
               <label
                 htmlFor="profile"
                 className="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
@@ -129,40 +129,40 @@ const Profile = () => {
             </h3>
             <p className="font-medium">{loginUser.first_name}</p>
             <div className="mx-auto mt-4.5 mb-5.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
-              <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
+              {/* <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                 <span className="font-semibold text-black dark:text-white">
                   259
                 </span>
                 <span className="text-sm">Posts</span>
-              </div>
+              </div> */}
               <div className="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
                 <span className="font-semibold text-black dark:text-white">
-                  129K
+                  Role
                 </span>
-                <span className="text-sm">Followers</span>
+                {/* <span className="text-sm">{loginUser.roles}</span> */}
               </div>
               <div className="flex flex-col items-center justify-center gap-1 px-4 xsm:flex-row">
                 <span className="font-semibold text-black dark:text-white">
-                  2K
+                {loginUser.roles}
                 </span>
-                <span className="text-sm">Following</span>
+                {/* <span className="text-sm">Following</span> */}
               </div>
             </div>
 
             <div className="mx-auto max-w-180">
-              <h4 className="font-semibold text-black dark:text-white">
+              {/* <h4 className="font-semibold text-black dark:text-white">
                 About Me
-              </h4>
-              <p className="mt-4.5">
+              </h4> */}
+              {/* <p className="mt-4.5">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                 Pellentesque posuere fermentum urna, eu condimentum mauris
                 tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus
                 ultricies. Sed vel aliquet libero. Nunc a augue fermentum,
                 pharetra ligula sed, aliquam lacus.
-              </p>
+              </p> */}
             </div>
 
-            <div className="mt-6.5">
+            {/* <div className="mt-6.5">
               <h4 className="mb-3.5 font-medium text-black dark:text-white">
                 Follow me on
               </h4>
@@ -313,7 +313,7 @@ const Profile = () => {
                   </svg>
                 </Link>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

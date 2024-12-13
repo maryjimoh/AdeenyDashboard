@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 
-const SelectGroupOne: React.FC = () => {
+const SelectGroupOne: React.FC = ({}) => {
   const [selectedOption, setSelectedOption] = useState<string>('');
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
 
   const changeTextColor = () => {
     setIsOptionSelected(true);
+
+
+
   };
 
+
+  // console.log(options,"je")
   return (
     <div className="mb-4.5">
       <label className="mb-2.5 block text-black dark:text-white">
@@ -27,16 +32,17 @@ const SelectGroupOne: React.FC = () => {
           }`}
         >
           <option value="" disabled className="text-body dark:text-bodydark">
-            Select your subject
+            Select Payment Method
           </option>
-          <option value="USA" className="text-body dark:text-bodydark">
-            USA
+          
+          <option value="MOMO" className="text-body dark:text-bodydark">
+            BANK
           </option>
-          <option value="UK" className="text-body dark:text-bodydark">
-            UK
+          <option value="BANK" className="text-body dark:text-bodydark">
+            MOMO
           </option>
-          <option value="Canada" className="text-body dark:text-bodydark">
-            Canada
+          <option value="CARD" className="text-body dark:text-bodydark">
+            CARD
           </option>
         </select>
 

@@ -19,10 +19,20 @@ const Modal: React.FC<ModalProps> = ({
   cancelLabel = 'Cancel',
   onConfirm,
 }) => {
+  // Handle modal dismiss when clicking outside
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+      onClick={handleOverlayClick} // Dismiss modal on click outside
+    >
       <div className="bg-white rounded-lg shadow-lg w-[90%] sm:w-[400px]">
         <div className="p-4 border-b">
           <h3 className="text-lg font-bold">{title}</h3>
@@ -34,14 +44,14 @@ const Modal: React.FC<ModalProps> = ({
           {onConfirm && (
             <button
               onClick={onConfirm}
-              className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
+              className=" bg-primary text-white rounded hover:bg-gray-600 transition h-10 w-15"
             >
               {confirmLabel}
             </button>
           )}
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition"
+            className=" bg-primary text-white rounded hover:bg-gray-600 transition h-10 w-15"
           >
             {cancelLabel}
           </button>

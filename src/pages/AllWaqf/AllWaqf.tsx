@@ -7,7 +7,9 @@ const AllWaqf = () => {
     <>
       <Breadcrumb pageName="All Waqf"/>
       <div className="flex flex-col gap-10">
-       <WaqfTable/>
+      
+        <WaqfTable  />
+    
       </div>
     </>
   );
