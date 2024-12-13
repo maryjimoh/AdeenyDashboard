@@ -1,13 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import { Route, Routes, useLocation, Navigate } from 'react-router-dom'; 
 import PageTitle from './components/PageTitle';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Calendar from './pages/Calendar';
-import Chart from './pages/Chart';
-import ECommerce from './pages/Dashboard/ECommerce';
-import FormElements from './pages/Form/FormElements';
-import FormLayout from './pages/Form/FormLayout';
+import Dashboard from './pages/Dashboard/Dashboard';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Tables from './pages/Tables';
@@ -21,10 +18,10 @@ import AllWaqf from './pages/AllWaqf/AllWaqf';
 import VerifyOtp from './pages/Authentication/VerifyOtp';
 import { useSelector } from 'react-redux';
 import { RootState } from './redux/store/Store';
+import AddWaqf from './pages/Form/AddWaqf';
 
 function App() {
   const { pathname } = useLocation();
-  // const token = useSelector((state: RootState) => state.auth.accessToken)  as string | null ;
   const token: string | null = useSelector((state: RootState) => state.auth.accessToken);
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -77,7 +74,7 @@ function App() {
             element={
               <>
                 <PageTitle title="Adeeny Dashboard" />
-                <ECommerce token={token} />
+                <Dashboard token={token} />
               </>
             }
           />
@@ -101,24 +98,6 @@ function App() {
             }
           />
           <Route
-            path="/forms/form-elements"
-            element={
-              <>
-                <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <FormElements />
-              </>
-            }
-          />
-          <Route
-            path="/forms/form-layout"
-            element={
-              <>
-                <PageTitle title="Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <FormLayout />
-              </>
-            }
-          />
-          <Route
             path="/tables"
             element={
               <>
@@ -136,15 +115,7 @@ function App() {
               </>
             }
           />
-          <Route
-            path="/chart"
-            element={
-              <>
-                <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-                <Chart />
-              </>
-            }
-          />
+         
           <Route
             path="/ui/alerts"
             element={
@@ -199,6 +170,16 @@ function App() {
               </>
             }
           />
+
+           <Route
+            path="/addwaqf"
+            element={
+              <>
+                <PageTitle title="All Waqf | TailAdmin - Tailwind CSS Admin Dashboard Template" />
+                <AddWaqf/>
+              </>
+            }
+          />
           
           {/* Catch-all route for undefined authenticated routes */}
           <Route path="*" element={<Navigate to="/dashbord" replace />} /> {/* Redirect to /dashbord if the route is not found */}
@@ -209,37 +190,3 @@ function App() {
 }
 
 export default App;
-
-
-// profilePic: null as File | null, 
-// const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//   const file = e.target.files?.[0];
-//   if (file) {
-//     setUserData(prevData => ({ ...prevData, profilePic: file }));
-//     const reader = new FileReader();
-//     reader.onloadend = () => {
-//       setPreview(reader.result as string);
-//     };
-//     reader.readAsDataURL(file);
-//   }
-// };
-
-{/* Profile Picture input */}
-{/* <div className="mb-4">
-<label className="mb-2.5 block font-medium text-black dark:text-white">
-  Profile Picture
-</label>
-<div className='flex'>
-<input
-  type="file"
-  accept="image/*"
-  onChange={handleFileChange}
-  className="w-full"
-/>
-{preview && (
-  <div className="">
-    <img src={preview} alt="Profile Preview" className="w-10 h-10 rounded-full object-cover" />
-  </div>
-)}
-</div>
-</div> */}
